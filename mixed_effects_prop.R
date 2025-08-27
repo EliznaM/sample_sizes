@@ -10,7 +10,7 @@
 # the outcome is proportion of scans that differ between scan diagram and histology diagram
 # problem - THERE IS NO PREDICTOR FOR THE MODEL
 
-# Question: is it different from a coin flip?
+# Question: is it different from 0?
 
 # will analyse with a logistic regression with mixed effects, 
 # both reader and scan will be random effects, as below
