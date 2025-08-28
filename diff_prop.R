@@ -18,7 +18,7 @@ set.seed(986976)
 reader_data <- function(rdr = "A", n = 100){
   df <- tibble(pt_id = paste0("id", 1:n),
                scan = "x",
-               hist = sample(c("x", "y"), n, prob = c(0.66, 0.33), replace = T),
+               hist = sample(c("x", "y"), n, prob = c(0.7, 0.3), replace = T),
                change = NA,
                reader = rdr
   ) |> 
@@ -72,7 +72,7 @@ return(res_test)
 
 set.seed(938373)
 x <- seq(40, 140, by = 10)
-gr <- expand_grid(it = 1:1000, x)
+gr <- expand_grid(it = 1:500, x)
 
 ll <- map2(gr$x, gr$it,
     ~x_tests(x = 3, nn = .x) |> 
@@ -80,8 +80,25 @@ ll <- map2(gr$x, gr$it,
              it = .y))
 
 
-ll |> 
+plotdta <- ll |> 
   bind_rows()
+
+plotdta |> 
+  pivot_longer(c(est, ci_lwr, ci_upr), names_to = "metric",
+               values_to = "value") |> 
+  ggplot(aes(value, it, group = it, colour = metric))+
+  geom_point(alpha = 0.5)+
+  facet_wrap(~nn, ncol = 1)+
+  scale_colour_manual(values = c("grey70", "grey70", "black"))+
+  scale_x_continuous(breaks = seq(0, 1, by = 0.1)) +
+  theme_minimal()
+
+
+
+
+
+
+
 
 
 
